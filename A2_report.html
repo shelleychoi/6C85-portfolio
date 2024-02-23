@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Vis & Society Assignment 2</title>
+	<link rel="stylesheet" href="https://vis-society.github.io/assignments/report.css" />
+</head>
+
+<body>
+	<header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Data Analysis
+		</h1>
+
+		<p>
+			<strong>Shelley Choi</strong> — <em>shello@mit.edu</em>
+		</p>
+	</header>
+	<main>
+		<section>
+			<h2>Subtheme: Speculation</h2>
+
+			<h3>Overall Analysis Questions</h3>
+			<ol>
+				<li>Where are the investments? Do investors prefer certain locations over others? Where are they flipping?<br>
+					<b>Motivation: </b>
+					In addition to the warnings presented by MAPC’s report, I have a friend living in Seaport who’s recently fallen victim to rent prices. While rent has been rising for the past two years by a couple hundred dollars, her building recently announced that next year’s rent will cost an additional thousand dollars. I’m wondering whether that’s a common trend across Boston as a whole, or concentrated in costly residential areas like Seaport that are perhaps more likely to be a target of speculation.</li>
+				<br>
+				<li>Who are these investors? Can we draw conclusions of their motivations from who they are?<br>
+					<b>Motivation: </b>
+					Most of the ProPublica article is centered around private equity firms buying out residences. Is this generally true, and is it a recent trend? I don’t know too much about private equity, but I would suspect that they’re a relatively new phenomenon. What about other types of firms that focus on real-estate?
+				</li>
+				<br>
+				<li>What kind of homes are these investors looking for (such as certain amenities)?<br>
+					<b>Motivation: </b>
+					In addition to location, I would assume that investors really focus on the style of the residence as well, depending on how easy they are to flip. The examples of places that GreyStar bought out in the ProPublica article seemed like they were smaller (studio/one-bedroom) apartments where tenants move in and out more often than larger condo-style or family-centered houses where residents live much longer and are thus harder to flip. Is this assumption true? 
+				</li>
+			</ol>
+		</section>
+
+		<section>
+			<h2>Dataset Overview</h2>
+			This dataset was gathered by Metro Boston’s Metropolitan Area Planning Council (MAPC) to track real estate transactions. It consists of 49,301 instances of residential sales transactions in the Greater Boston area, from 2000 to 2023. There are 63 variables, which can largely be categorized into the following: location of residence (includes address, zip code, longtitude/latitude coordinates), 2) description of said residence (includes building style, size, number of bedrooms and bathrooms, amenities, cost, year built), and 3) buyer and seller information (includes entity type, investor type, number of properties owned). 
+			<br><br>
+			The data is quite clean, with not many duplicate rows/entries or completely missing entries. In the initial data analysis stage, as noted in the first graph, I noticed there were some addresses that were incorrect and completely outside of the scope of the dataset for the Greater Boston area such as coordinates (0, 0). These were immediately removed. 
+			<br><br>
+			There are, however, quite a few null values, especially for information that is either not disclosed in the dataset or not found. These null instances were accounted for a little differently in each of the data analyses in exploring the dataset, depending on the nature of the question and the graph. For example, a null value in location could still give valuable information about pricing or a buyer’s pattern. Thus, these entries were not altogether removed just for the sake of having a few blank values. Each of the visualizations that did handle null values were noted as such—if information about the buyer was not disclosed and null, then the visualization made was simply about known buyers. 
+			<br><br>
+			Many of the variables had close relationships with each other. For example, data regarding the address, street, and zip code were heavily tied together. In addition, each of the binary identification measures for the buyer and seller were quite related: most of the times, a buyer was either a bank, business, Fannie Mae/Freddie Mac, government, LLC, or trust. There were obviously some instances where a buyer could be both a bank and a trust, and those were mentioned as such in the following investigations.
+		</section>
+
+		<section>
+			<h2>Discoveries & Insights</h2>
+			<h3>1. Where and what are the cost of these flips?</h3>
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Map of Residentials by Zip Code
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I wanted to start off by plotting the concentration of residentials by the zip code. I found that most of them were concentrated in Boston itself, and later analyses regarding locations were thus focused specifically on Boston. I filtered out zip codes way outside of the Boston area. In this graph, the colors represent how dense the residential data is for a particular zip code. When hovering over each of the zip codes, a tooltip including the zip code and its count is shown.					<br>
+					<b>Insight: </b>
+					The zip codes are quite scattered around Boston itself, but the majority is within the city of Boston itself. The zip code with the highest density of 12,705 counts is annotated on the graph as 02116. Zip code 02116 is located entirely within Suffolk County, and includes neighborhoods Back Bay, South End, Bay Village. It is socioeconomically defined as “Middle Class,” and the majority race residing is White. 					<br>
+					<b>Follow-up: </b>
+					Plotting just the zip codes felt broad and elementary, as I wanted to dive deeper into which specific areas of Boston were these investors most interested in. What are some more specific addresses that investors preferred?
+					<br><br>
+					* Note: This data is not found within our initial MAPC dataset, and was pulled from external datasets hosted on the City of Boston. 
+				</p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Map of Residentials by Addresses (Coordinates)
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					Zooming into Boston, instead of plotting broad zip codes, I plotted individual coordinates of addresses instead. I filtered out addresses that were illegible, as well as those that contained coordinates outside of Boston, such as coordinate point (0, 0). The size of the dots represent the density of that particular coordinate, and zip codes represent each of the colors. This way, you can clearly see the distinctions between zip codes. 					<br>
+					<b>Insight: </b>
+					In this visualization, we can see that the data is quite well-distributed over Boston, but many of the residences are concentrated in Suffolk County’s Metro Boston (Bay Area, Bay Village, South End, North End, Beacon Hill, and Downtown). Inside each of these areas, the residences are spread quite evenly.					<br>
+					<b>Follow-up: </b>
+					Now that I know about the distribution of the addresses, do locations impact the investors’ purchases and how much money they can make from flipping?
+					<br><br>
+					Because I cannot plot the addresses directly, I was unable to cross-reference the pairing of individual addresses and their corresponding longitude and latitude coordinates. Thus, there may be room for improvement in terms of accurately plotting the addresses. 
+				</p>				  
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Map of Residentials by Flip Price 
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					In order to answer how much investors made from flipping in what area, I plotted a similar map as the aforementioned visualizations with the same filters, but now the color focuses on the price difference. The addresses that did not contain price differences (i.e. null values) were removed.					<br>
+					<b>Insight: </b>
+					Ranging from orange as the least amount of money made and blue as the most amount of money made, three locations immediately jump out as the highest price difference. These locations are annotated with their corresponding addresses and zip codes. Note that most of the other values are in the low millions, which is pale in comparison to how much these three locations are making ($728 million, $820 million, and $950 million). Two of these locations are located near Seaport/Downtown Waterfront, thereby confirming my assumption that investors are very interested in that area of Boston. Many of the other locations with high price flips are likewise located in the Financial District/Downtown Boston area. The tooltips highlight the price difference and their respective address and zip codes.					<br>
+					<b>Follow-up: </b>
+					Before moving on, however, I wanted to take a closer look at flip times. Were certain locations flipped quicker than others? Perhaps some areas have a higher population or a higher turnover ratio. How can this trend be seen in the graphs?
+				</p>				  
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Map of Residentials by Flip Time
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					Adapting the familiar map format, I adjusted the color scheme to highlight different flip terms: short, medium, long, and non-flip. The term "non-flip" represents properties with a flip term exceeding 24 months, no longer considered a "flip." I assigned the color brown to non-flip to emphasize the properties meeting flip criteria. Short-term flips were marked in a bright red, while longer-term ones were indicated with a more muted green.
+					<br>
+					<b>Insight: </b>
+					Surprisingly, all of the terms seem evenly distributed throughout Boston. I cannot pinpoint a certain area for having a shorter term than the rest, nor a longer term than the rest. It seems like we cannot single out a neighborhood for having a higher rate of flipping.
+					<br>
+					<b>Follow-up: </b>
+					Now that we understand the geographical implications of flipping, or the lack thereof, I wanted to take a closer look at the flip price itself, and focus on the timeline of these flips.
+				</p>				  
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Map of Flip Price against Flip Time
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I wanted to take a closer look at the time elapsed between buying and selling a property, or the duration it took to flip. I filtered out the data that did not include flip/month horizon data. Instead of just grouping the flip terms broadly, I broke it down into months, and looked at the average price difference of these properties. Each of the months are colored according to their corresponding flip term (carrying over from the previous visualization), and the count of properties that fall into those months are labeled with a number. A tooltip shows more detail on the actual average price difference for the bar.
+					<br>
+					<b>Insight: </b>
+					I expected short-term flips to generate the highest price difference, so I was very surprised to realize that it wasn’t. If anything, they have the lowest average price difference, with month 0 and month 5, on average, going completely negative. Specifically, flip horizon month 0 had 59 properties with an average price difference of -$550,000 whereas month 5 had 61 properties with the lowest price difference of -$2 million. That said, most of the “flips” were longer than 24 months, meaning that they’re not really considered “flips”. I did include them in the visualization for the sake of comparison, and we can see that even though they took a while to sell, they still generated positive profit.
+				</p>
+			</figure>
+
+			<h3>2. Who are the buyers and sellers?</h3>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Purchases against Flip Horizon
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I wanted to start off with a sanity check, plotting to find out when buyers made the most purchases. I split the buy horizon into quarters to see the trend more accurately, but not months because that would give too much detail. The visualization is a simple line graph that tracks the number of purchases of the buyers. Note that it seems like some of the data is going into the future, as there are quarters for 2027. After reading the metadata, where it shows that they calculated the buy horizon by adding 5 years, I realized that since the dataset runs until 2023, these are valid dates and were not filtered out. However, the entries without buy horizon quarters were filtered out.					<br>
+					<b>Insight: </b>
+					It seems like most of the buyers purchased between 2008 and 2012, adjusting for the 5-year period of the buy horizon calculation. As annotated, the quarter with the most purchases was 2010 Q3 (adjusted), with 48,806 purchases. This was quite interesting as the financial crisis happened in 2008, where the real estate market also crashed. But I’m assuming that because the market was at its lowest, investors started buying up residences when they were the cheapest.					<br>
+					<b>Follow-up: </b>
+					Knowing that buyers were purchasing after a financial crisis, who are these buyers? Are they large banks, or private equity firms?
+					<br><br>
+					* Note: I’m not certain whether the buy horizon that’s adjusted for the 5-year period is supposed to be calculated this way, but I could not find further information aside from the metadata and decided to go with this method. 
+				  </p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Types of Known Buyers and their Purchased, Owned Assets
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I created a table that looks into the types of buyers. Because many of the buyers did not have values for their binary identifiers, I removed them, and changed the graph to represent known buyers instead. I created a calculated field that transformed the binary keys into their actual identities, mapping 1 in each of the categories to a string. Of the known buyers, they fell into 6 large categories: bank, business, Fannie Mae/Freddie Mae, Government, LLC, and Trust. Some of these buyers fell into more than one category, such as Bank/LLC and Bank/Trust, so I created a secondary type that exhibits the buyers’ type more clearly. In order to avoid repetition, I just categorized them into what was in order alphabetically. However, even within these specific categories, I noticed that I didn’t know the type of investors that were investing. I thus added a third column that really looks at the types of investors, then mapped them to the average calculation of how many purchases they made and how many properties they currently own. 					<br>
+					<b>Insight: </b>
+					I was shocked to see the pure number of Fannie Mae/Freddie Mac purchases. In total, there were 21,000 purchases. This is much more than any of the other types of buyers, and supports what was read in the ProPublica article regarding how many purchases they have been behind. I also thought it was interesting to look at institutional investors. From what I know, institutional investors are different from private investors in that they are generally a company or organization that invests money, such as hedge funds and mutual funds. Hedge funds, by nature, cash out their investments quite early. We can clearly see this trend in this visualization, where of the different types of investors, institutional investors have the highest number of purchases but a relatively low number of purchases currently owned. For example, institutional investors of bank/trust purchased 8,655 properties but only held onto 287 of them. This indicates that they are likely selling more of their properties quickly.
+					<br><br>
+					* Note: I had trouble determining whether the 0 for the Fannie Mae/Freddie Mae category was an indication of not Fannie Mae/Freddie Mae or rather a 0 for Fannie Mae and 1 for Freddie Mae. After further discussion with two TAs, we collectively determined that it was likely the first.
+				</p>
+				  
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Types of Known Sellers and their Owned Assets
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					The process for finding the identifiers for sellers was quite similar to buyers. Again, I filtered sellers that had unknown types and stuck with known sellers. Then, I created a calculated field from each of the binary keys to strings, and then sorted them alphabetically into larger categories of sellers. However, because the total number of properties purchased was only available for buyers, I had to remove that for sellers. Instead, we have a horizontal bar graph that plots each of the more specific investor types. 					<br>
+					<b>Insight: </b>
+					Of the known sellers, banks had the greatest frequency. Of the known investor types, institutional investors yet again had by far the highest number of residences owned. A similar logic as described above is prescribed.					<br>
+					<br><br>
+					* Note: Lack of total properties purchased for sellers.
+				</p>
+			</figure>
+
+			<h3>3. What are the preferred residences?</h3>
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Property Types of Residences
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I was really curious about what kinds of residences these investors were most interested in. I chose a treemap that is in-line with the idea that these are residences with areas, and shaded them according to density. I decided to look at both the property type and usage, as these two variables are deeply related. A tooltip shows the count of each of these property types, which is especially useful for the rectangles that are not large enough to show words.					<br>
+					<b>Insight: </b>
+					Among the different types of residences, RCD Condominium was dominant, at 44,375. I was fairly surprised to see this, as I suspected that most of them were going to be smaller studio apartments instead.					<br>
+					<b>Follow-up: </b>
+					I wanted to dive deeper into the RCD Condominium residence type. What is it about them that’s so popular to investors? Can the popularity be connected to how many bedrooms and bathrooms do they have? How large are they? 
+					<br><br>
+					* Note: I could not find further information on the acronyms of the property type, so I left them as is.
+				</p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Types of Residences by Bedroom/Bathroom Count
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I continued the previous graph, but split it into smaller segments by highlighting the number of bedrooms and bathrooms. I created a calculated field to transform the number of bedrooms and bathrooms into a string. In smaller groups, I was able to clearly see the different properties of RCD Condominium. A tooltip shows the average lot size and the average interior size to further add detail to the property types.
+					<br>
+					<b>Insight: </b>
+					It made since that 1 bedroom and 1 bathroom homes were most common. The visualization also shows how many different types of bedroom/bathroom combinations there can be just for condominium alone, so that drastically improved my understanding of these different types of residences.
+					<br>
+					<b>Follow-up: </b>
+					Moving on from the types of residences, do buyers have a preference for the style of the residence as well?
+					<br><br>
+					* Note: I was a little skeptical about the residences with 0 bathrooms, as that didn’t make much common sense to me, but there were so many of them that I left it in (perhaps studio apartments count that as no bathrooms, depending on how they reported it?). 
+				</p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Styles of Residences for Known Buyers
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I plotted a horizontal bar graph that looks at frequency of the style for the residences that each category of buyers purchased. I ordered the styles semi-alphabetically (with the exception of low-, mid-, and high-rise as that order made more sense), and the colors simply correspond to each style of residence. Again, the buyers that did not have identifiers were removed to focus on known buyers. 
+					<br>
+					<b>Insight: </b>
+					I was surprised to see that different buyers seemed to have different preferences in styles. Banks predominantly favored row-middles, but Fannie Mae/Freddie Mac preferred mid-rises a little more than row-middles, and LLC mostly favored mid-rises. This is in line with my expectations though, as I figured that high-rises would be harder to turn over/flip faster.
+					<br>
+					<b>Follow-up: </b>
+					In addition to residence types, bed/bathroom counts, and style, did buyers prefer certain amenities?  
+				</p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Amenities of Residences
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					Before looking at what buyers liked what amenities, I wanted to see what amenities were even there. I plotted amenities into a packed bubble format, with those without amenity names were filtered out. 
+					<br>
+					<b>Insight: </b>
+					Air conditioning was by far the largest amenity offered, with a deck and balcony coming in second and third, respectively.
+					<br>
+					<b>Follow-up: </b>
+					Did buyers prefer certain amenities? 
+				</p>
+			</figure>
+
+			<figure>
+				<img src="IMAGE_FILENAME" alt="" />
+				<figcaption>
+				Amenities of Residences for Known Buyers
+				</figcaption>
+				<p align="left">
+					<b>Process: </b>
+					I created a bar graph by each of the larger buyer categories, and plotted the count of each amenity according to the buyer type. The colors reflect the different types of amenities. The buyers without known identifiers were filtered, as well as null amenity names.
+					<br>
+					<b>Insight: </b>
+					This graph wasn’t as informative as I had hoped, since air conditioning was so dominant and the others weren’t so well-known.
+				</p>
+			</figure>
+
+		</section>
+
+		<section>
+			<h2>Summary</h2>
+
+			<p>Speculation is very real, and it’s alive in Metro Boston, specifically Downtown, as we know it. While the flip price did not have much to do with the flip term, residences with shorter flip terms did worse. In addition, most of the known buyers were Fannie Mae/Freddie Mac, while most of the known sellers were banks. Institutional investors seemed to have purchased many and sold many. While the buyers didn’t prefer a specific amenity style, they did predominantly prefer RCD condominiums with one bedroom and one bathroom, while the style of the residence depended on the type of buyer. To truly answer the question of the kind of role speculation needs, we likely need to draw in from other datasets that include more demographic data or specific names on the buyers and sellers. 
+			</p>
+		</section>
+	</main>
+</body>
+</html>
